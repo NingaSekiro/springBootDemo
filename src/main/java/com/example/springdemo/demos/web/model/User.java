@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.example.springdemo.demos.web;
+package com.example.springdemo.demos.web.model;
+
 
 /**
  * @author <a href="mailto:chenxilzx1@gmail.com">theonefx</a>

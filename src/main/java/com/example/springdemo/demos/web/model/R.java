@@ -1,4 +1,5 @@
-package com.example.springdemo.
+package com.example.springdemo.demos.web.model;
+
 import lombok.Data;
 
 import java.util.HashMap;

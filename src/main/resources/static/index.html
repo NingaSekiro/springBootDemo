@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传</title>
+</head>
+<body>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <label for="file">springMVc：</label>
+    <input type="file" name="file" id="file" required>
+    <br>
+    <input type="submit" value="上传">
+</form>
+<form action="/myservlet" method="post" enctype="multipart/form-data">
+    <label for="file">servlet：</label>
+    <input type="file" name="file" id="file2" required>
+    <br>
+    <input type="submit" value="上传">
+</form>
+</body>
+</html>

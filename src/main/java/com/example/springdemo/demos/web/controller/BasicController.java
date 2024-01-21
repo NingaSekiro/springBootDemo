@@ -14,19 +14,27 @@
  * limitations under the License.
  */
 
-package com.example.springdemo.demos.web;
+package com.example.springdemo.demos.web.controller;
 
+import com.example.springdemo.demos.web.model.R;
+import com.example.springdemo.demos.web.model.User;
+import com.example.springdemo.demos.web.service.UserValidate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.xml.ws.Response;
+
 /**
  * @author <a href="mailto:chenxilzx1@gmail.com">theonefx</a>
  */
 @Controller
 public class BasicController {
+    @Autowired
+    private UserValidate userValidate;
 
     // http://127.0.0.1:8080/hello?name=lisi
     @RequestMapping("/hello")
@@ -45,11 +53,17 @@ public class BasicController {
         return user;
     }
 
-    // http://127.0.0.1:8080/save_user?name=newName&age=11
+    //     http://127.0.0.1:8080/save_user?name=newName&age=11
     @RequestMapping("/save_user")
     @ResponseBody
-    public String saveUser(User u) {
-        return "user will save: name=" + u.getName() + ", age=" + u.getAge();
+    public R saveUser(User u){
+        try {
+            userValidate.validate(u);
+            userValidate.validateLength(u);
+        } catch (Exception e) {
+            return R.error(e.getMessage());
+        }
+        return R.success("成功");
     }
 
     // http://127.0.0.1:8080/html
