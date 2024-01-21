@@ -56,13 +56,9 @@ public class BasicController {
     //     http://127.0.0.1:8080/save_user?name=newName&age=11
     @RequestMapping("/save_user")
     @ResponseBody
-    public R saveUser(User u){
-        try {
-            userValidate.validate(u);
-            userValidate.validateLength(u);
-        } catch (Exception e) {
-            return R.error(e.getMessage());
-        }
+    public R saveUser(User u) {
+        userValidate.validate(u);
+        userValidate.validateLength(u);
         return R.success("成功");
     }
 
