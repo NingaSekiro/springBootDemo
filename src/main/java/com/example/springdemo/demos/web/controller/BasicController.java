@@ -16,49 +16,50 @@
 
 package com.example.springdemo.demos.web.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.example.springdemo.demos.web.db.mapper.SysUserMapper;
 import com.example.springdemo.demos.web.model.R;
-import com.example.springdemo.demos.web.model.User;
-import com.example.springdemo.demos.web.service.UserValidate;
+import com.example.springdemo.demos.web.model.SysUser;
+import com.example.springdemo.demos.web.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
+import javax.validation.Valid;
+
 
 /**
  * @author <a href="mailto:chenxilzx1@gmail.com">theonefx</a>
  */
-@Controller
+@RestController
 public class BasicController {
     @Autowired
-    private UserValidate userValidate;
+    private ApplicationContext applicationContext;
+    @Autowired
+    private SysUserService sysUserService;
+
 
     // http://127.0.0.1:8080/hello?name=lisi
     @RequestMapping("/hello")
-    @ResponseBody
     public String hello(@RequestParam(name = "name", defaultValue = "unknown user") String name) {
         return "Hello " + name;
     }
 
     // http://127.0.0.1:8080/user
     @RequestMapping("/user")
-    @ResponseBody
-    public User user() {
-        User user = new User();
+    public SysUser user() {
+        SysUser user = new SysUser();
+        user.setId(10L);
         user.setName("theonefx");
         user.setAge(666);
+        user.setEmail("123456789@qq.com");
+        sysUserService.insert(user);
         return user;
     }
 
     //     http://127.0.0.1:8080/save_user?name=newName&age=11
     @RequestMapping("/save_user")
-    @ResponseBody
-    public R saveUser(User u) {
-        userValidate.validate(u);
-        userValidate.validateLength(u);
+    public R saveUser(@Valid SysUser u) {
         return R.success("成功");
     }
 
@@ -70,8 +71,13 @@ public class BasicController {
 
     @ModelAttribute
     public void parseUser(@RequestParam(name = "name", defaultValue = "unknown user") String name
-            , @RequestParam(name = "age", defaultValue = "12") Integer age, User user) {
+            , @RequestParam(name = "age", defaultValue = "12") Integer age, SysUser user) {
         user.setName("zhangsan");
         user.setAge(18);
+    }
+
+    @GetMapping("/beanList")
+    public String beanList() {
+        return JSON.toJSONString(applicationContext.getBeanDefinitionNames());
     }
 }
