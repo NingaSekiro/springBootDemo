@@ -20,7 +20,9 @@ import com.alibaba.fastjson.JSON;
 import com.example.springdemo.demos.web.db.mapper.SysUserMapper;
 import com.example.springdemo.demos.web.model.R;
 import com.example.springdemo.demos.web.model.SysUser;
+import com.example.springdemo.demos.web.model.ValidationResult;
 import com.example.springdemo.demos.web.service.SysUserService;
+import com.example.springdemo.demos.web.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
@@ -47,19 +49,24 @@ public class BasicController {
 
     // http://127.0.0.1:8080/user
     @RequestMapping("/user")
-    public SysUser user() {
+    public R user() {
         SysUser user = new SysUser();
-        user.setId(10L);
+//        user.setId(10L);
         user.setName("theonefx");
         user.setAge(666);
         user.setEmail("123456789@qq.com");
-        sysUserService.insert(user);
-        return user;
+//        sysUserService.insert(user);
+        ValidationResult validationResult = ValidateUtil.validateEntity(user);
+        if (validationResult.isHasErrors()){
+            return R.error("validationResult.getMessage()");
+        }
+        return R.success("dd");
+//        return user;
     }
 
     //     http://127.0.0.1:8080/save_user?name=newName&age=11
     @RequestMapping("/save_user")
-    public R saveUser(@Valid SysUser u) {
+    public R saveUser(SysUser u) {
         return R.success("成功");
     }
 
