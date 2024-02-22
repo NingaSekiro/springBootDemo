@@ -31,7 +31,7 @@ public class ValidateUtil {
                 .configure()
                 // 快速失败模式
                 .failFast(false)
-                .messageInterpolator( new MyMessageInterpolator() )
+//                .messageInterpolator( new MyMessageInterpolator() )
                 .buildValidatorFactory();
         validator = validatorFactory.getValidator();
     }

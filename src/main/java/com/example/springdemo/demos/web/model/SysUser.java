@@ -3,6 +3,7 @@ package com.example.springdemo.demos.web.model;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Data
 public class SysUser {
