@@ -10,14 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class SysUserService {
     @Autowired
     private SysUserMapper sysUserMapper;
-    @Autowired
-    private AsyncService asyncService;
+
 
     @Transactional
     public void insert(SysUser sysUser) {
         String currentThreadName = Thread.currentThread().getName();
         System.out.println("main operation executing in thread: " + currentThreadName);
         sysUserMapper.insert(sysUser);
-        asyncService.executeAsyncOperation();
     }
 }
