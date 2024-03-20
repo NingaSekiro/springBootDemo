@@ -98,4 +98,5 @@
         #{item.email,jdbcType=VARCHAR})
     </foreach>
   </insert>
+
 </mapper>
