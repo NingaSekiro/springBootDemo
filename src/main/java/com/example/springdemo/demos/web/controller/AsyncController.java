@@ -41,42 +41,51 @@ public class AsyncController {
     public R user(@RequestParam("count") Integer count) throws Exception {
         log.info("user");
         for (Integer i = 0; i < count; i++) {
-            asyncService.doSomethingInt(count,Thread.currentThread());
+            asyncService.doDb(count, Thread.currentThread());
         }
         return R.success("dd");
     }
 
-    @SneakyThrows
     @GetMapping("/open/something")
-    public void something() {
-        List<CompletableFuture<?>> completableFutures = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-//            CompletableFuture<String> stringCompletableFuture = asyncService.doSomethingInt(i);
-//            stringCompletableFuture.exceptionally((e) -> {
-//                throw new RuntimeException(e.getMessage());
-//            });
-//            completableFutures.add(stringCompletableFuture);
+    public String something() throws Exception {
+        List<CompletableFuture<String>> completableFutures = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            CompletableFuture<String> stringCompletableFuture = asyncService.doSomethingInteger(i);
+            completableFutures.add(stringCompletableFuture);
         }
-//        CompletableFuture.allOf(completableFutures.toArray(futuresArray)).exceptionally((e) -> {
+
+//        CompletableFuture[] array = completableFutures.toArray(new CompletableFuture[0]);
+//        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).handle()
+//        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).exceptionally((e) -> {
 //            log.error("An error occurred: ", e);
 //            return null;
 //        });
-//        completableFutures.forEach((future) -> {
-//            try {
-//                log.info("result: {}", future.get());
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            } catch (ExecutionException e) {
-//                throw new RuntimeException(e);
+
+//        最好用get(long timeout,Timeout unit) 设置超时时间，这样不会一直阻塞。
+//        try {
+//            for (CompletableFuture<?> completableFuture : completableFutures) {
+//                completableFuture.get(30, TimeUnit.SECONDS);
 //            }
-//        });
-        //thenRun,thenApply,thenAccept,thenAsync
-        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).thenRun(() -> {
-            log.info("end");
-        }).exceptionally((e) -> {
+//        } catch (Exception e) {
+//            log.error("An error occurred: ", e);
+//            completableFutures.stream()
+//                    .filter(f -> !f.isDone())
+//                    .forEach(f -> f.cancel(true));
+//        }
+        //thenRun,thenApply,thenAccept,thenAsync  即使这样写allOf还是得等一组内的线程完成才分析thenRun还是exceptionally
+//        因为 CompletableFuture的设计并没有其中断或取消一个已经开始
+        CompletableFuture<Object> objectCompletableFuture = CompletableFuture.anyOf(completableFutures.toArray(new CompletableFuture[0]));
+        objectCompletableFuture.exceptionally((e) -> {
             log.error("An error occurred: ", e);
-            return null;
-        }).join();
+            for (CompletableFuture<String> completableFuture : completableFutures) {
+                if (!completableFuture.isDone()) {
+                    completableFuture.complete("new Object()");
+                }
+            }
+            throw new RuntimeException(e);
+        });
+//        CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).join();
         log.info("true end                                                                             ll");
+        return "ok";
     }
 }

@@ -18,7 +18,7 @@ public class AsyncService {
 
     @Async("doSomethingExecutor")
     @SonTransaction
-    public CompletableFuture<String> doSomethingInt(Integer value, Thread thread) throws Exception {
+    public CompletableFuture<String> doDb(Integer value, Thread thread) throws Exception {
         log.info("do Integer value: {},thread:{}", value, Thread.currentThread().getName());
         SysUser user = new SysUser();
         user.setId(10L);
@@ -32,6 +32,18 @@ public class AsyncService {
         }
         sysUserService.insert(user);
         return CompletableFuture.completedFuture("do something1: " + value);
+    }
+
+    @Async("doSomethingExecutor")
+    public CompletableFuture<String> doSomethingInteger(int value) throws InterruptedException {
+        log.info("do Integer value: {}", value);
+        if (value == 2) {
+            int j = 1 / 0;
+        }
+        Thread.sleep(10000);
+        log.info("complete: {}", value);
+        return CompletableFuture.completedFuture("do something2: " + value);
+//        return new AsyncResult<>("doSomethingInteger: " + value);
     }
 
     @Async("doSomethingExecutor")
