@@ -23,6 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.time.Duration;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -36,8 +42,17 @@ public class BasicController {
 
     // http://127.0.0.1:8080/hello?name=lisi
     @RequestMapping("/hello")
-    public String hello(@RequestParam(name = "name", defaultValue = "unknown user") String name) {
-        return "Hello " + name;
+    public String hello(@RequestParam(name = "name", defaultValue = "unknown user") String name) throws InterruptedException {
+        Thread.sleep(30000);
+        return Thread.currentThread().getName();
+    }
+
+    @GetMapping("/users")
+    public Flux<SysUser> getNonBlockingUsers() {
+        return Mono.fromCallable(this::getUsersFromService)
+                .flatMapMany(Flux::fromIterable)
+                .delayElements(Duration.ofMillis(500)) // 模拟每个用户加载的异步延迟
+                .doOnNext(user -> System.out.println("Processing user asynchronously: " + user.getName()));
     }
 
     //     http://127.0.0.1:8080/save_user?name=newName&age=11
@@ -65,5 +80,14 @@ public class BasicController {
         return JSON.toJSONString(applicationContext.getBeanDefinitionNames());
     }
 
-
+    private List<SysUser> getUsersFromService() {
+        try {
+            Thread.sleep(2000000); // 模拟耗时操作
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        SysUser sysUser=new SysUser();
+        sysUser.setId(1L);
+        return Collections.singletonList(sysUser);
+    }
 }

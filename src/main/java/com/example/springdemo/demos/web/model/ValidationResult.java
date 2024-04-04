@@ -23,7 +23,7 @@ public class ValidationResult {
      *
      * @return
      */
-    public String getMessage() {
+    public String getMessage() throws ClassNotFoundException {
         if (errorMsg == null || errorMsg.isEmpty()) {
             return StringUtils.EMPTY;
         }
