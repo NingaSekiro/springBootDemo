@@ -8,12 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderService {
 
-    private final ApplicationEventPublisher eventPublisher;
-
     @Autowired
-    public OrderService(ApplicationEventPublisher eventPublisher) {
-        this.eventPublisher = eventPublisher;
-    }
+    private  ApplicationEventPublisher eventPublisher;
 
     public void createOrder(Order order) {
         // 实现订单创建逻辑...

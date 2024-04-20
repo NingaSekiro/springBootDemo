@@ -40,11 +40,18 @@ public class BasicController {
     @Autowired
     private ApplicationContext applicationContext;
 
-    // http://127.0.0.1:8080/hello?name=lisi
-    @RequestMapping("/hello")
-    public String hello(@RequestParam(name = "name", defaultValue = "unknown user") String name) throws InterruptedException {
-        Thread.sleep(30000);
-        return Thread.currentThread().getName();
+//     http://127.0.0.1:8080/hello?name=lisi
+//    @RequestMapping("/hello")
+//    public String hello() throws InterruptedException {
+//        Thread.sleep(3000);
+//        return Thread.currentThread().getName();
+//    }
+
+    @GetMapping("/hello")
+    public Mono<String> hello() {
+
+        return Mono.delay(Duration.ofSeconds(3))
+                .thenReturn(Thread.currentThread().getName());
     }
 
     @GetMapping("/users")
