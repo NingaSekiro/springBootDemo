@@ -19,6 +19,7 @@ package com.example.springdemo.demos.web.controller;
 import com.alibaba.fastjson.JSON;
 import com.example.springdemo.demos.web.model.R;
 import com.example.springdemo.demos.web.model.SysUser;
+import com.example.springdemo.demos.web.service.ComputeNodeTaskProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -40,6 +41,9 @@ public class BasicController {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private ComputeNodeTaskProcessor computeNodeTaskProcessor;
+
 //     http://127.0.0.1:8080/hello?name=lisi
 //    @RequestMapping("/hello")
 //    public String hello() throws InterruptedException {
@@ -48,10 +52,9 @@ public class BasicController {
 //    }
 
     @GetMapping("/hello")
-    public Mono<String> hello() {
-
-        return Mono.delay(Duration.ofSeconds(3))
-                .thenReturn(Thread.currentThread().getName());
+    public String hello() throws Exception {
+        computeNodeTaskProcessor.processTask("ddd");
+        return "dd";
     }
 
     @GetMapping("/users")
@@ -93,7 +96,7 @@ public class BasicController {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        SysUser sysUser=new SysUser();
+        SysUser sysUser = new SysUser();
         sysUser.setId(1L);
         return Collections.singletonList(sysUser);
     }
