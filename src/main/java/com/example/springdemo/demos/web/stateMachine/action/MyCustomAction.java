@@ -1,4 +1,4 @@
-package com.example.springdemo.demos.web.stateMachine.config;
+package com.example.springdemo.demos.web.stateMachine.action;
 
 import com.example.springdemo.demos.web.stateMachine.enums.Events;
 import com.example.springdemo.demos.web.stateMachine.enums.States;
@@ -14,6 +14,7 @@ public class MyCustomAction implements Action<States, Events> {
         // 获取当前状态和事件
         States currentState = context.getStateMachine().getState().getId();
         Events currentEvent = context.getEvent();
+        throw new RuntimeException("执行失败");
         // 执行业务逻辑，例如更新数据库、发送通知等
 //        System.out.println("Executing action on transition from " + currentState + " to another state due to event " + currentEvent);
 

@@ -30,6 +30,9 @@ public class StateProcessor {
             Order order = message.getHeaders().get("order", Order.class);
             persister.restore(stateMachine, order.getState());
             boolean b = stateMachine.sendEvent(message);
+            if (stateMachine.hasStateMachineError()){
+                log.error("stateMachine has error" );
+            }
             persister.persist(stateMachine, order.getState());
             return b;
         } catch (Throwable e) {

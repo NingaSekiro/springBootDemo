@@ -1,5 +1,7 @@
 package com.example.springdemo.demos.web.stateMachine.config;
 
+import com.example.springdemo.demos.web.stateMachine.action.ErrorHandlerAction;
+import com.example.springdemo.demos.web.stateMachine.action.MyCustomAction;
 import com.example.springdemo.demos.web.stateMachine.enums.Events;
 import com.example.springdemo.demos.web.stateMachine.enums.States;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.statemachine.action.StateDoActionPolicy;
 import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineConfigurationConfigurer;
@@ -32,10 +33,14 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     @Override
     public void configure(StateMachineConfigurationConfigurer<States, Events> config) throws Exception {
         config
-                .withConfiguration()
-                .stateDoActionPolicy(StateDoActionPolicy.IMMEDIATE_CANCEL);
+                .withConfiguration();
+//                .listener(new StateMachineListenerAdapter<States, Events>() {
+//                    @Override
+//                    public void stateMachineError(StateMachine<States, Events> stateMachine, Exception exception) {
+//                        log.error("dddddd");
+//                    }
+//                });
     }
-
     // 状态机状态配置
     @Override
     public void configure(StateMachineStateConfigurer<States, Events> states) throws Exception {

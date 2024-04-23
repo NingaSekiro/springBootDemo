@@ -1,4 +1,4 @@
-package com.example.springdemo.demos.web.stateMachine.config;
+package com.example.springdemo.demos.web.stateMachine.action;
 
 import com.example.springdemo.demos.web.stateMachine.enums.Events;
 import com.example.springdemo.demos.web.stateMachine.enums.States;

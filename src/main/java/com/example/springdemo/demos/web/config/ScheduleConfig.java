@@ -23,11 +23,16 @@ public class ScheduleConfig {
     @Scheduled(fixedRate = 1000000)
 //    @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
     public void myTasks3(){
+
+
         Order order = null;
         try {
             order = new Order();
             order.setState(States.UNPAID);
             stateProcessor.process(order, Events.PAY);
+            if (stateMachine.hasStateMachineError()){
+                log.error("ddd");
+            }
             stateProcessor.process(order, Events.RECEIVE);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
