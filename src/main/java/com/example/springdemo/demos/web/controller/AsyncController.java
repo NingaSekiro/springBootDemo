@@ -1,6 +1,5 @@
 package com.example.springdemo.demos.web.controller;
 
-import com.example.springdemo.demos.web.anno.MainTransaction;
 import com.example.springdemo.demos.web.model.R;
 import com.example.springdemo.demos.web.service.AsyncService;
 import lombok.SneakyThrows;
@@ -37,12 +36,8 @@ public class AsyncController {
 
     // http://127.0.0.1:8080/user
     @RequestMapping("/user")
-    @MainTransaction
     public R user(@RequestParam("count") Integer count) throws Exception {
         log.info("user");
-        for (Integer i = 0; i < count; i++) {
-            asyncService.doDb(count, Thread.currentThread());
-        }
         return R.success("dd");
     }
 

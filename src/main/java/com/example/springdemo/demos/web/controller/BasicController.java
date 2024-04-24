@@ -23,11 +23,10 @@ import com.example.springdemo.demos.web.service.ComputeNodeTaskProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,14 +56,6 @@ public class BasicController {
         return "dd";
     }
 
-    @GetMapping("/users")
-    public Flux<SysUser> getNonBlockingUsers() {
-        return Mono.fromCallable(this::getUsersFromService)
-                .flatMapMany(Flux::fromIterable)
-                .delayElements(Duration.ofMillis(500)) // 模拟每个用户加载的异步延迟
-                .doOnNext(user -> System.out.println("Processing user asynchronously: " + user.getName()));
-    }
-
     //     http://127.0.0.1:8080/save_user?name=newName&age=11
     @RequestMapping("/save_user")
     public synchronized R saveUser(SysUser u) throws InterruptedException {
@@ -78,12 +69,6 @@ public class BasicController {
         return "index.html";
     }
 
-    @ModelAttribute
-    public void parseUser(@RequestParam(name = "name", defaultValue = "unknown user") String name
-            , @RequestParam(name = "age", defaultValue = "12") Integer age, SysUser user) {
-        user.setName("zhangsan");
-        user.setAge(18);
-    }
 
     @GetMapping("/beanList")
     public String beanList() {

@@ -1,10 +1,10 @@
 package com.example.springdemo.demos.web.db.mapper;
 
 import com.example.springdemo.demos.web.model.SysUser;
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface SysUserMapper {
@@ -15,6 +15,8 @@ public interface SysUserMapper {
     int insertSelective(SysUser record);
 
     SysUser selectByPrimaryKey(Long id);
+
+    List<SysUser> selectByProgress(Integer progress);
 
     int updateByPrimaryKeySelective(SysUser record);
 
