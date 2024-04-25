@@ -6,12 +6,14 @@ import com.example.springdemo.demos.web.stateMachine.action.ReceiveAction;
 import com.example.springdemo.demos.web.stateMachine.enums.Events;
 import com.example.springdemo.demos.web.stateMachine.enums.States;
 import com.example.springdemo.demos.web.stateMachine.guard.MyCustomGuard;
+import com.example.springdemo.demos.web.stateMachine.listener.DefaultStateMachineListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
+import org.springframework.statemachine.config.builders.StateMachineConfigurationConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
 
@@ -26,18 +28,14 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     private final ErrorHandlerAction errorHandlerAction;
     private final MyCustomGuard myCustomGuard;
     private final ReceiveAction receiveAction;
+    private final DefaultStateMachineListener defaultStateMachineListener;
 
-//    @Override
-//    public void configure(StateMachineConfigurationConfigurer<States, Events> config) throws Exception {
-//        config
-//                .withConfiguration();
-//                .listener(new StateMachineListenerAdapter<States, Events>() {
-//                    @Override
-//                    public void stateMachineError(StateMachine<States, Events> stateMachine, Exception exception) {
-//                        log.error("dddddd");
-//                    }
-//                });
-//    }
+    @Override
+    public void configure(StateMachineConfigurationConfigurer<States, Events> config) throws Exception {
+        config
+                .withConfiguration().listener(defaultStateMachineListener);
+    }
+
     // 状态机状态配置
     @Override
     public void configure(StateMachineStateConfigurer<States, Events> states) throws Exception {
@@ -115,7 +113,7 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
     //            }
     //        }
 
-            // 在状态机开始进行状态转换时调用
+    // 在状态机开始进行状态转换时调用
 //            @Override
 //            public void transitionStarted(Transition<States, Events> transition) {
 //                // 从未支付->待收货状态

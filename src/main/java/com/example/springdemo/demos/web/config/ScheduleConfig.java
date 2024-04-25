@@ -41,9 +41,9 @@ public class ScheduleConfig {
         persister.restore(stateMachine, nowTask);
         Message<Events> message =
                 MessageBuilder.withPayload(Events.PAY).setHeader("sysUsers", sysUsers).build();
-        stateMachine.sendEvent(message);
+        boolean b = stateMachine.sendEvent(message);
         Message<Events> message2 =
                 MessageBuilder.withPayload(Events.RECEIVE).copyHeaders(message.getHeaders()).build();
-        stateMachine.sendEvent(message2);
+        boolean b1 = stateMachine.sendEvent(message2);
     }
 }
