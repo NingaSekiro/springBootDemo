@@ -25,6 +25,7 @@ public class ReceiveAction implements Action<States, Events> {
         // 获取当前状态和事件
         States currentState = context.getStateMachine().getState().getId();
         Events currentEvent = context.getEvent();
+        List<SysUser> sysUsers1 = (List<SysUser>) context.getMessage().getHeaders().get("sysUsers");
         List<SysUser> sysUsers = sysUserMapper.selectByProgress(100);
         sysUsers.forEach(sysUser -> {
             sysUser.setProgress(100);

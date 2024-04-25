@@ -25,6 +25,8 @@ public class PayAction implements Action<States, Events> {
         // 获取当前状态和事件
         States currentState = context.getStateMachine().getState().getId();
         Events currentEvent = context.getEvent();
+        List<SysUser> sysUsers1 = (List<SysUser>) context.getMessage().getHeaders().get("sysUsers");
+        sysUsers1.get(0).setId(10000L);
         List<SysUser> sysUsers = sysUserMapper.selectByProgress(50);
         sysUsers.forEach(sysUser -> {
             sysUser.setProgress(50);

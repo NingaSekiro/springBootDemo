@@ -9,6 +9,8 @@ import com.example.springdemo.demos.web.stateMachine.enums.States;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.persist.StateMachinePersister;
@@ -37,7 +39,11 @@ public class ScheduleConfig {
         nowTask.setId(1L);
         nowTask.setProgress(minProgress);
         persister.restore(stateMachine, nowTask);
-        stateMachine.sendEvent(Events.PAY);
-        stateMachine.sendEvent(Events.RECEIVE);
+        Message<Events> message =
+                MessageBuilder.withPayload(Events.PAY).setHeader("sysUsers", sysUsers).build();
+        stateMachine.sendEvent(message);
+        Message<Events> message2 =
+                MessageBuilder.withPayload(Events.RECEIVE).copyHeaders(message.getHeaders()).build();
+        stateMachine.sendEvent(message2);
     }
 }
