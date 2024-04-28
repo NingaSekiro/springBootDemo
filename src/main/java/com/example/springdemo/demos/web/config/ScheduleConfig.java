@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.stereotype.Component;
@@ -27,7 +26,7 @@ public class ScheduleConfig {
     private final TaskMapper taskMapper;
     private final StateMachinePersister<States, Events, Task> persister;
 
-    @Scheduled(fixedDelay = 1000000)
+//    @Scheduled(fixedDelay = 1000000)
 //    @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
     public void myTasks3() throws Exception {
         List<SysUser> sysUsers = sysUserMapper.selectByProgress(100);
