@@ -1,4 +1,4 @@
-package com.example.springdemo.demos.web.config;
+package com.example.springdemo.demos.web.service;
 
 import com.example.springdemo.demos.web.db.mapper.SysUserMapper;
 import com.example.springdemo.demos.web.db.mapper.TaskMapper;
@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class ScheduleConfig {
+public class ScheduleService {
     private final StateMachine<States, Events> stateMachine;
     private final SysUserMapper sysUserMapper;
     private final TaskMapper taskMapper;
