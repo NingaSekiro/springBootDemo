@@ -1,22 +1,63 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>文件上传</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form action="/upload" method="post" enctype="multipart/form-data">-->
+<!--    <label for="file">springMVc：</label>-->
+<!--    <input type="file" name="file" id="file" required>-->
+<!--    <br>-->
+<!--    <input type="submit" value="上传">-->
+<!--</form>-->
+<!--<form action="/myservlet" method="post" enctype="multipart/form-data">-->
+<!--    <label for="file">servlet：</label>-->
+<!--    <input type="file" name="file" id="file2" required>-->
+<!--    <br>-->
+<!--    <input type="submit" value="上传">-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Download File</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form method="post" action="/myservlet">-->
+<!--    <button type="submit">Download</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件上传</title>
+    <title>Download File</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-<form action="/upload" method="post" enctype="multipart/form-data">
-    <label for="file">springMVc：</label>
-    <input type="file" name="file" id="file" required>
-    <br>
-    <input type="submit" value="上传">
-</form>
-<form action="/myservlet" method="post" enctype="multipart/form-data">
-    <label for="file">servlet：</label>
-    <input type="file" name="file" id="file2" required>
-    <br>
-    <input type="submit" value="上传">
-</form>
+<button id="downloadButton">Download</button>
+
+<script>
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        axios({
+            url: '/myservlet',
+            method: 'POST',
+            responseType: 'blob', // 表示一个 Blob 对象，其中包含数据以表示这个对象所包含的是文件对象。
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.txt'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+        })
+            .catch((error) => console.error('Download failed:', error));
+    });
+</script>
 </body>
 </html>
+
+
