@@ -4,6 +4,7 @@ import com.example.springdemo.demos.web.runnable.SchedulerRunnable;
 import com.example.springdemo.demos.web.service.DynamicTaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,19 +16,23 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 public class SchedulerController {
-
     private final DynamicTaskService taskService;
-    private final SchedulerRunnable schedulerRunnable;
+    private final ApplicationContext context;
 
     @PostMapping("/startTask")
     public ResponseEntity<String> startTask(@RequestParam String taskId,
-                                            @RequestParam String cronExpression) {
+                                            @RequestParam String cronExpression) throws InterruptedException {
 //        Runnable dummyTask = () -> System.out.println("任务执行：" + taskId + " - 当前时间：" + new java.util.Date());
         List<String> taskIds = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            taskIds.add( String.valueOf(i));
-        }
+        taskIds.add(taskId);
+//        for (int i = 0; i < 100; i++) {
+//            taskIds.add( String.valueOf(i));
+//        }
+        SchedulerRunnable schedulerRunnable = context.getBean(SchedulerRunnable.class);
         schedulerRunnable.setList(taskIds);
+        if (taskId.equals("1")) {
+            Thread.sleep(20000);
+        }
         taskService.startTask(taskId, cronExpression, schedulerRunnable);
         return ResponseEntity.ok("任务启动指令已接受。");
     }

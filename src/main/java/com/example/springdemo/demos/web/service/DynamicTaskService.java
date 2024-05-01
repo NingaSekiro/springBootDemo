@@ -22,13 +22,13 @@ public class DynamicTaskService {
     public void startTask(String taskId, String cronExpression, Runnable task) {
         System.out.println("尝试为任务 " + taskId + " 设置Cron表达式: " + cronExpression);
         CronTrigger trigger = new CronTrigger(cronExpression);
-        if (taskFutures.containsKey(taskId)) {
-            log.info("任务 " + taskId + " 已存在，无法再次启动。");
-            return;
-        }
+//        if (taskFutures.containsKey(taskId)) {
+//            log.info("任务 " + taskId + " 已存在，无法再次启动。");
+//            return;
+//        }
 //        ScheduledFuture<?> scheduledFuture = taskScheduler.schedule(task, trigger);
         // 创建Duration对象，表示延迟10秒
-        Duration delay = Duration.ofSeconds(10);
+        Duration delay = Duration.ofSeconds(10000);
 
         // 使用Duration安排任务，首次延迟10秒后执行，然后每次执行间隔10秒
         ScheduledFuture<?> scheduledFuture = taskScheduler.scheduleWithFixedDelay(task, delay);
