@@ -4,7 +4,6 @@ import com.example.springdemo.demos.web.runnable.SchedulerRunnable;
 import com.example.springdemo.demos.web.service.DynamicTaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,9 +14,12 @@ import java.util.List;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
+//@Scope(value = WebApplicationContext.SCOPE_REQUEST)
+//@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SchedulerController {
     private final DynamicTaskService taskService;
-    private final ApplicationContext context;
+//    private final ApplicationContext context;
+    private final SchedulerRunnable schedulerRunnable;
 
     @PostMapping("/startTask")
     public ResponseEntity<String> startTask(@RequestParam String taskId,
@@ -28,7 +30,7 @@ public class SchedulerController {
 //        for (int i = 0; i < 100; i++) {
 //            taskIds.add( String.valueOf(i));
 //        }
-        SchedulerRunnable schedulerRunnable = context.getBean(SchedulerRunnable.class);
+//        SchedulerRunnable schedulerRunnable = context.getBean(SchedulerRunnable.class);
         schedulerRunnable.setList(taskIds);
         if (taskId.equals("1")) {
             Thread.sleep(20000);

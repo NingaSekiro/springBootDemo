@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -29,14 +28,15 @@ public class AsyncConfiguration {
         executor.setThreadNamePrefix("do-something-");
         // 缓冲队列满了之后的拒绝策略：由调用线程处理（一般是主线程）
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy ());
+        executor.setTaskDecorator(new ContextCopyingDecorator());
+
         executor.initialize();
         return executor;
     }
 
     @Bean
-    //ThreadPoolTaskScheduler
     public TaskScheduler testScheduler() {
-        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        CustomThreadPoolTaskScheduler scheduler = new CustomThreadPoolTaskScheduler();
         scheduler.setPoolSize(1);
         scheduler.setThreadNamePrefix("task-scheduler-");
         return scheduler;
