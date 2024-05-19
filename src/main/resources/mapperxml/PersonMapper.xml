@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springdemo.demos.web.db.mapper.PersonMapper">
+  <resultMap id="BaseResultMap" type="com.example.springdemo.demos.web.model.Person">
+    <!--@mbg.generated-->
+    <!--@Table PERSON-->
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="PRO1" jdbcType="VARCHAR" property="pro1" />
+    <result column="PRO2" jdbcType="VARCHAR" property="pro2" />
+    <result column="PRO3" jdbcType="VARCHAR" property="pro3" />
+    <result column="PRO4" jdbcType="VARCHAR" property="pro4" />
+    <result column="PRO5" jdbcType="VARCHAR" property="pro5" />
+    <result column="PRO6" jdbcType="VARCHAR" property="pro6" />
+    <result column="PRO7" jdbcType="VARCHAR" property="pro7" />
+    <result column="PRO8" jdbcType="VARCHAR" property="pro8" />
+    <result column="PRO9" jdbcType="VARCHAR" property="pro9" />
+    <result column="PRO10" jdbcType="VARCHAR" property="pro10" />
+    <result column="PRO11" jdbcType="VARCHAR" property="pro11" />
+    <result column="PRO12" jdbcType="VARCHAR" property="pro12" />
+    <result column="PRO13" jdbcType="VARCHAR" property="pro13" />
+    <result column="PRO14" jdbcType="VARCHAR" property="pro14" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    "NAME", EMAIL, PRO1, PRO2, PRO3, PRO4, PRO5, PRO6, PRO7, PRO8, PRO9, PRO10, PRO11, 
+    PRO12, PRO13, PRO14
+  </sql>
+  <insert id="insert" parameterType="com.example.springdemo.demos.web.model.Person">
+    <!--@mbg.generated-->
+    insert into PERSON ("NAME", EMAIL, PRO1, 
+      PRO2, PRO3, PRO4, PRO5, 
+      PRO6, PRO7, PRO8, PRO9, 
+      PRO10, PRO11, PRO12, 
+      PRO13, PRO14)
+    values (#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{pro1,jdbcType=VARCHAR}, 
+      #{pro2,jdbcType=VARCHAR}, #{pro3,jdbcType=VARCHAR}, #{pro4,jdbcType=VARCHAR}, #{pro5,jdbcType=VARCHAR}, 
+      #{pro6,jdbcType=VARCHAR}, #{pro7,jdbcType=VARCHAR}, #{pro8,jdbcType=VARCHAR}, #{pro9,jdbcType=VARCHAR}, 
+      #{pro10,jdbcType=VARCHAR}, #{pro11,jdbcType=VARCHAR}, #{pro12,jdbcType=VARCHAR}, 
+      #{pro13,jdbcType=VARCHAR}, #{pro14,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springdemo.demos.web.model.Person">
+    <!--@mbg.generated-->
+    insert into PERSON
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        "NAME",
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="pro1 != null">
+        PRO1,
+      </if>
+      <if test="pro2 != null">
+        PRO2,
+      </if>
+      <if test="pro3 != null">
+        PRO3,
+      </if>
+      <if test="pro4 != null">
+        PRO4,
+      </if>
+      <if test="pro5 != null">
+        PRO5,
+      </if>
+      <if test="pro6 != null">
+        PRO6,
+      </if>
+      <if test="pro7 != null">
+        PRO7,
+      </if>
+      <if test="pro8 != null">
+        PRO8,
+      </if>
+      <if test="pro9 != null">
+        PRO9,
+      </if>
+      <if test="pro10 != null">
+        PRO10,
+      </if>
+      <if test="pro11 != null">
+        PRO11,
+      </if>
+      <if test="pro12 != null">
+        PRO12,
+      </if>
+      <if test="pro13 != null">
+        PRO13,
+      </if>
+      <if test="pro14 != null">
+        PRO14,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="pro1 != null">
+        #{pro1,jdbcType=VARCHAR},
+      </if>
+      <if test="pro2 != null">
+        #{pro2,jdbcType=VARCHAR},
+      </if>
+      <if test="pro3 != null">
+        #{pro3,jdbcType=VARCHAR},
+      </if>
+      <if test="pro4 != null">
+        #{pro4,jdbcType=VARCHAR},
+      </if>
+      <if test="pro5 != null">
+        #{pro5,jdbcType=VARCHAR},
+      </if>
+      <if test="pro6 != null">
+        #{pro6,jdbcType=VARCHAR},
+      </if>
+      <if test="pro7 != null">
+        #{pro7,jdbcType=VARCHAR},
+      </if>
+      <if test="pro8 != null">
+        #{pro8,jdbcType=VARCHAR},
+      </if>
+      <if test="pro9 != null">
+        #{pro9,jdbcType=VARCHAR},
+      </if>
+      <if test="pro10 != null">
+        #{pro10,jdbcType=VARCHAR},
+      </if>
+      <if test="pro11 != null">
+        #{pro11,jdbcType=VARCHAR},
+      </if>
+      <if test="pro12 != null">
+        #{pro12,jdbcType=VARCHAR},
+      </if>
+      <if test="pro13 != null">
+        #{pro13,jdbcType=VARCHAR},
+      </if>
+      <if test="pro14 != null">
+        #{pro14,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into PERSON
+    ("NAME", EMAIL, PRO1, PRO2, PRO3, PRO4, PRO5, PRO6, PRO7, PRO8, PRO9, PRO10, PRO11, 
+      PRO12, PRO13, PRO14)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.name,jdbcType=VARCHAR}, #{item.email,jdbcType=VARCHAR}, #{item.pro1,jdbcType=VARCHAR}, 
+        #{item.pro2,jdbcType=VARCHAR}, #{item.pro3,jdbcType=VARCHAR}, #{item.pro4,jdbcType=VARCHAR}, 
+        #{item.pro5,jdbcType=VARCHAR}, #{item.pro6,jdbcType=VARCHAR}, #{item.pro7,jdbcType=VARCHAR}, 
+        #{item.pro8,jdbcType=VARCHAR}, #{item.pro9,jdbcType=VARCHAR}, #{item.pro10,jdbcType=VARCHAR}, 
+        #{item.pro11,jdbcType=VARCHAR}, #{item.pro12,jdbcType=VARCHAR}, #{item.pro13,jdbcType=VARCHAR}, 
+        #{item.pro14,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>
