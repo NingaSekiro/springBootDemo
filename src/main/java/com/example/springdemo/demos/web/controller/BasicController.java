@@ -17,6 +17,7 @@
 package com.example.springdemo.demos.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.springdemo.demos.web.anno.OperationLog;
 import com.example.springdemo.demos.web.model.R;
 import com.example.springdemo.demos.web.model.SysUser;
 import com.example.springdemo.demos.web.service.ComputeNodeTaskProcessor;
@@ -50,9 +51,10 @@ public class BasicController {
 //        return Thread.currentThread().getName();
 //    }
 
+    @OperationLog("T(com.example.springdemo.demos.web.util.ValidateUtil).test(#s)")
     @GetMapping("/hello")
-    public String hello() throws Exception {
-        computeNodeTaskProcessor.processTask("ddd");
+    public String hello(String s) throws Exception {
+//        computeNodeTaskProcessor.processTask("ddd");
         return "dd";
     }
 

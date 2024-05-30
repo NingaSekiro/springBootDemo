@@ -1,6 +1,5 @@
 package com.example.springdemo.demos.web.util;
 
-import com.example.springdemo.demos.web.anno.MyMessageInterpolator;
 import com.example.springdemo.demos.web.model.ValidationResult;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.HibernateValidator;
@@ -81,6 +80,10 @@ public class ValidateUtil {
             validationResult.setErrorMsg(errorMsgMap);
         }
         return validationResult;
+    }
+
+    public static String test(String s){
+        return s+"ddd";
     }
 
 }
