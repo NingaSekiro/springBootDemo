@@ -5,8 +5,13 @@
     <groupId>com.example</groupId>
     <artifactId>springDemo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>springDemo</name>
     <description>springDemo</description>
+    <modules>
+        <module>service</module>
+        <module>stateMachine</module>
+    </modules>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
