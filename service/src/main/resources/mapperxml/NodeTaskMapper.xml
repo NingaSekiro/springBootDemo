@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springdemo.demos.web.db.mapper.NodeTaskMapper">
+  <resultMap id="BaseResultMap" type="com.example.springdemo.demos.web.model.NodeTask">
+    <!--@mbg.generated-->
+    <!--@Table NODE_TASK-->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="PROGRESS" jdbcType="INTEGER" property="progress" />
+    <result column="STEP" jdbcType="VARCHAR" property="step" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    ID, PROGRESS, STEP
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from NODE_TASK
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--@mbg.generated-->
+    delete from NODE_TASK
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.springdemo.demos.web.model.NodeTask">
+    <!--@mbg.generated-->
+    insert into NODE_TASK (ID, PROGRESS, STEP
+      )
+    values (#{id,jdbcType=BIGINT}, #{progress,jdbcType=INTEGER}, #{step,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.springdemo.demos.web.model.NodeTask">
+    <!--@mbg.generated-->
+    insert into NODE_TASK
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="progress != null">
+        PROGRESS,
+      </if>
+      <if test="step != null">
+        STEP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="progress != null">
+        #{progress,jdbcType=INTEGER},
+      </if>
+      <if test="step != null">
+        #{step,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.springdemo.demos.web.model.NodeTask">
+    <!--@mbg.generated-->
+    update NODE_TASK
+    <set>
+      <if test="progress != null">
+        PROGRESS = #{progress,jdbcType=INTEGER},
+      </if>
+      <if test="step != null">
+        STEP = #{step,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.springdemo.demos.web.model.NodeTask">
+    <!--@mbg.generated-->
+    update NODE_TASK
+    set PROGRESS = #{progress,jdbcType=INTEGER},
+      STEP = #{step,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into NODE_TASK
+    (ID, PROGRESS, STEP)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.progress,jdbcType=INTEGER}, #{item.step,jdbcType=VARCHAR}
+        )
+    </foreach>
+  </insert>
+</mapper>

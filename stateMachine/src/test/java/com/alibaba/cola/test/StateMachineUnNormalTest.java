@@ -1,15 +1,13 @@
 package com.alibaba.cola.test;
 
-import com.alibaba.cola.statemachine.Action;
-import com.alibaba.cola.statemachine.Condition;
-import com.alibaba.cola.statemachine.StateMachine;
-import com.alibaba.cola.statemachine.builder.StateMachineBuilder;
-import com.alibaba.cola.statemachine.builder.StateMachineBuilderFactory;
-import com.alibaba.cola.statemachine.impl.StateMachineException;
+import com.example.springdemo.Action;
+import com.example.springdemo.Condition;
+import com.example.springdemo.StateMachine;
+import com.example.springdemo.builder.StateMachineBuilder;
+import com.example.springdemo.builder.StateMachineBuilderFactory;
+import com.example.springdemo.impl.StateMachineException;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static com.alibaba.cola.test.StateMachineTest.MACHINE_ID;
 
 /**
  * StateMachineUnNormalTest
