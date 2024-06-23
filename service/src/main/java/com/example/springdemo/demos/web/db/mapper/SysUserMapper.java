@@ -16,8 +16,6 @@ public interface SysUserMapper {
 
     SysUser selectByPrimaryKey(Long id);
 
-    List<SysUser> selectByProgress(Integer progress);
-
     int updateByPrimaryKeySelective(SysUser record);
 
     int updateByPrimaryKey(SysUser record);

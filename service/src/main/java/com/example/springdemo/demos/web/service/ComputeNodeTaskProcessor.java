@@ -24,7 +24,8 @@ public class ComputeNodeTaskProcessor implements ApplicationEventPublisherAware 
     @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 1000))
     public void processTask(String taskId) throws Exception {
         log.info("ddddd");
-        throw new Exception("ddd");
+
+//        throw new Exception("ddd");
 //        ComputeNodeTask task = taskCenter.getTask(taskId);
 //
 //        while (!task.isTerminal()) {

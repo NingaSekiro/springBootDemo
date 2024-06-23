@@ -17,10 +17,11 @@
 package com.example.springdemo.demos.web.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.springdemo.demos.web.anno.OperationLog;
 import com.example.springdemo.demos.web.model.R;
 import com.example.springdemo.demos.web.model.SysUser;
 import com.example.springdemo.demos.web.service.ComputeNodeTaskProcessor;
+import com.example.springdemo.demos.web.service.SysUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -37,12 +38,12 @@ import java.util.List;
  */
 @RestController
 @Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BasicController {
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
+    private final SysUserService sysUserService;
 
-    @Autowired
-    private ComputeNodeTaskProcessor computeNodeTaskProcessor;
+    private final ComputeNodeTaskProcessor computeNodeTaskProcessor;
 
 //     http://127.0.0.1:8080/hello?name=lisi
 //    @RequestMapping("/hello")
@@ -51,7 +52,7 @@ public class BasicController {
 //        return Thread.currentThread().getName();
 //    }
 
-    @OperationLog("T(com.example.springdemo.demos.web.util.ValidateUtil).test(#s)")
+//    @OperationLog("T(com.example.springdemo.demos.web.util.ValidateUtil).test(#s)")
     @GetMapping("/hello")
     public String hello(String s) throws Exception {
 //        computeNodeTaskProcessor.processTask("ddd");
@@ -60,9 +61,9 @@ public class BasicController {
 
     //     http://127.0.0.1:8080/save_user?name=newName&age=11
     @RequestMapping("/save_user")
-    public synchronized R saveUser(SysUser u) throws InterruptedException {
-        Thread.sleep(30000);
-        return R.success("成功");
+    public  R saveUser(SysUser u) throws InterruptedException {
+        sysUserService.saveUser(u);
+        return R.success(u);
     }
 
     // http://127.0.0.1:8080/html

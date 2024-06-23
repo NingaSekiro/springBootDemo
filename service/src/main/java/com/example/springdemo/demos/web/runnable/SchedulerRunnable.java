@@ -20,7 +20,7 @@ public class SchedulerRunnable implements Runnable {
     @Setter
     private List<String> list;
 
-    //    private final DynamicTaskService dynamicTaskService;
+//        private final DynamicTaskService dynamicTaskService;
     public void run() {
 //        log list
         log.info("runnable start");

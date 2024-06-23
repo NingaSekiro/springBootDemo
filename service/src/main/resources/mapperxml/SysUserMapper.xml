@@ -5,11 +5,13 @@
     <!--@mbg.generated-->
     <!--@Table SYS_USER-->
     <id column="ID" jdbcType="BIGINT" property="id" />
-    <result column="PROGRESS" jdbcType="INTEGER" property="progress" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="AGE" jdbcType="INTEGER" property="age" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    ID, PROGRESS
+    ID, "NAME", AGE, EMAIL
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -18,11 +20,6 @@
     from SYS_USER
     where ID = #{id,jdbcType=BIGINT}
   </select>
-
-    <select id="selectByProgress" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        SELECT * FROM SYS_USER WHERE <![CDATA[PROGRESS >= 0 AND PROGRESS < #{progress,jdbcType=INTEGER}]]>
-    </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
     delete from SYS_USER
@@ -30,35 +27,55 @@
   </delete>
   <insert id="insert" parameterType="com.example.springdemo.demos.web.model.SysUser">
     <!--@mbg.generated-->
-    insert into SYS_USER (ID, PROGRESS)
-    values (#{id,jdbcType=BIGINT}, #{progress,jdbcType=INTEGER})
+    insert into SYS_USER (ID, "NAME", AGE, 
+      EMAIL)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.springdemo.demos.web.model.SysUser">
-      <!--@mbg.generated-->
-      insert into SYS_USER
-      <trim prefix="(" suffix=")" suffixOverrides=",">
-          <if test="id != null">
-              ID,
-          </if>
-          <if test="progress != null">
-              PROGRESS,
-          </if>
-      </trim>
-      <trim prefix="values (" suffix=")" suffixOverrides=",">
-          <if test="id != null">
-              #{id,jdbcType=BIGINT},
-          </if>
-          <if test="progress != null">
-              #{progress,jdbcType=INTEGER},
-          </if>
-      </trim>
+    <!--@mbg.generated-->
+    insert into SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        "NAME",
+      </if>
+      <if test="age != null">
+        AGE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.example.springdemo.demos.web.model.SysUser">
     <!--@mbg.generated-->
     update SYS_USER
     <set>
-      <if test="progress != null">
-        PROGRESS = #{progress,jdbcType=INTEGER},
+      <if test="name != null">
+        "NAME" = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        AGE = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=BIGINT}
@@ -66,16 +83,19 @@
   <update id="updateByPrimaryKey" parameterType="com.example.springdemo.demos.web.model.SysUser">
     <!--@mbg.generated-->
     update SYS_USER
-    set PROGRESS = #{progress,jdbcType=INTEGER}
+    set "NAME" = #{name,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=INTEGER},
+      EMAIL = #{email,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
   <insert id="batchInsert" parameterType="map">
     <!--@mbg.generated-->
     insert into SYS_USER
-    (ID, PROGRESS)
+    (ID, "NAME", AGE, EMAIL)
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.id,jdbcType=BIGINT}, #{item.progress,jdbcType=INTEGER})
+      (#{item.id,jdbcType=BIGINT}, #{item.name,jdbcType=VARCHAR}, #{item.age,jdbcType=INTEGER}, 
+        #{item.email,jdbcType=VARCHAR})
     </foreach>
   </insert>
 </mapper>

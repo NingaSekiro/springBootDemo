@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.example.springdemo.demos.web.db.mapper")
 public class SpringDemoApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpringDemoApplication.class, args);
-    }
+        SpringApplication app = new SpringApplication(SpringDemoApplication.class);
+        app.setAdditionalProfiles("dev");
+        app.run(args);    }
 }

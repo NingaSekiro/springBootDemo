@@ -19,6 +19,9 @@
     from NODE_TASK
     where ID = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from NODE_TASK
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--@mbg.generated-->
     delete from NODE_TASK

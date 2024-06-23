@@ -1,9 +1,10 @@
 package com.example.springdemo.demos.web.db.mapper;
 
 import com.example.springdemo.demos.web.model.NodeTask;
-import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface NodeTaskMapper {
@@ -14,6 +15,7 @@ public interface NodeTaskMapper {
     int insertSelective(NodeTask record);
 
     NodeTask selectByPrimaryKey(Long id);
+    List<NodeTask> selectAll();
 
     int updateByPrimaryKeySelective(NodeTask record);
 

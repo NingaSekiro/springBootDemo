@@ -9,23 +9,19 @@ import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.modules.junit4.PowerMockRunnerDelegate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(PowerMockRunner.class)
-@PowerMockRunnerDelegate(SpringJUnit4ClassRunner.class)
-@ActiveProfiles(value="test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @PowerMockIgnore("javax.management.*")
-public class SpringDemoApplicationTests {
+@AutoConfigureMockMvc
+public class SpringXmlTests {
+    ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-    @Autowired
     private BasicController basicController;
 
     @Mock
@@ -34,13 +30,12 @@ public class SpringDemoApplicationTests {
 
     @Test
     public void test() throws InterruptedException {
+        basicController=(BasicController) context.getBean("basicController");
         ReflectionTestUtils.setField(basicController, "sysUserService", sysUserService);
         PowerMockito.when(sysUserService.saveUser(any())).thenReturn(2);
         SysUser sysUser=new SysUser();
         sysUser.setId(1L);
         basicController.saveUser(sysUser);
     }
-
-
 }
 
