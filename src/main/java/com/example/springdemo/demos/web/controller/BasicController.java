@@ -17,6 +17,7 @@
 package com.example.springdemo.demos.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.springdemo.demos.web.anno.OperationLog;
 import com.example.springdemo.demos.web.model.R;
 import com.example.springdemo.demos.web.model.SysUser;
 import com.example.springdemo.demos.web.service.ComputeNodeTaskProcessor;
@@ -25,10 +26,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,6 +46,9 @@ public class BasicController {
 
     private final ComputeNodeTaskProcessor computeNodeTaskProcessor;
 
+    private static final int BUFFER_SIZE = 1024 * 1024; // 1MB
+    private static List<ByteBuffer> buffers = new ArrayList<>();
+
 //     http://127.0.0.1:8080/hello?name=lisi
 //    @RequestMapping("/hello")
 //    public String hello() throws InterruptedException {
@@ -52,17 +56,31 @@ public class BasicController {
 //        return Thread.currentThread().getName();
 //    }
 
-//    @OperationLog("T(com.example.springdemo.demos.web.util.ValidateUtil).test(#s)")
+    @OperationLog(paramNames = {"s"})
     @GetMapping("/hello")
     public String hello(String s) throws Exception {
-//        computeNodeTaskProcessor.processTask("ddd");
+        try {
+            while (true) {
+                // 不断创建DirectByteBuffer但不释放
+                ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
+                byte[] fillData = new byte[BUFFER_SIZE];
+                java.util.Arrays.fill(fillData, (byte)'d');
+                buffer.put(fillData);
+                buffers.add(buffer);
+
+                log.info("Allocated " + buffers.size() + "MB direct memory");
+                Thread.sleep(70); // 延迟，便于观察
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "dd";
     }
 
     //     http://127.0.0.1:8080/save_user?name=newName&age=11
-    @RequestMapping("/save_user")
-    public  R saveUser(SysUser u) throws InterruptedException {
-        sysUserService.saveUser(u);
+    @PostMapping("/save_user")
+    @OperationLog(paramNames = {"u.id", "u.name"})
+    public R saveUser(@RequestBody SysUser u) throws InterruptedException {
         return R.success(u);
     }
 

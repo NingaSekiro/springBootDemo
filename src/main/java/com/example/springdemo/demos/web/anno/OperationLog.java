@@ -6,5 +6,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface OperationLog {
-    String value();  // 用于SpEL表达式
+    String[] paramNames() default {};
 }
