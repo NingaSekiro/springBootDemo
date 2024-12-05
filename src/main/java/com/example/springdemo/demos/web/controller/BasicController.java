@@ -87,6 +87,7 @@ public class BasicController {
     // http://127.0.0.1:8080/html
     @RequestMapping("/html")
     public String html() {
+        log.info("dddddddddddddd");
         return "index.html";
     }
 
