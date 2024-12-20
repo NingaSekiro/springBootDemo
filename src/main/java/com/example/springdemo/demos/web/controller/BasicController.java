@@ -17,6 +17,7 @@
 package com.example.springdemo.demos.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.springdemo.DelayedQueueService;
 import com.example.springdemo.demos.web.anno.OperationLog;
 import com.example.springdemo.demos.web.model.R;
 import com.example.springdemo.demos.web.model.SysUser;
@@ -48,6 +49,17 @@ public class BasicController {
 
     private static final int BUFFER_SIZE = 1024 * 1024; // 1MB
     private static List<ByteBuffer> buffers = new ArrayList<>();
+
+
+    private final DelayedQueueService redissonDelayQueue;
+
+
+
+    @GetMapping("/sendMessage")
+    public String getToken() {
+        redissonDelayQueue.offerTask("hello,world",30);
+        return "ok";
+    }
 
 //     http://127.0.0.1:8080/hello?name=lisi
 //    @RequestMapping("/hello")

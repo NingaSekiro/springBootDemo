@@ -27,13 +27,13 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="com.example.springdemo.demos.web.controller.BasicController" level="info" additivity="false">
+<!--        <Logger name="com.example.springdemo.demos.web.controller.BasicController" level="info" additivity="false">-->
+<!--            <AppenderRef ref="Console" />-->
+<!--            <AppenderRef ref="test" />-->
+<!--        </Logger>-->
+        <Root level="info">
             <AppenderRef ref="Console" />
-            <AppenderRef ref="test" />
-        </Logger>
-        <Root level="error">
-            <AppenderRef ref="Console" />
-            <AppenderRef ref="RollingFile" />
+<!--            <AppenderRef ref="RollingFile" />-->
         </Root>
     </Loggers>
 </Configuration>
